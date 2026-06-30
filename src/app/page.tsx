@@ -1,5 +1,5 @@
-import DesignSwitcher from "@/components/DesignSwitcher";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  return <DesignSwitcher />;
+export default function RootPage() {
+  redirect("/app");
 }

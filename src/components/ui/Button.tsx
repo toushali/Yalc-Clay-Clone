@@ -1,46 +1,51 @@
-import { ReactNode } from "react";
-import Link from "next/link";
+import { forwardRef } from "react";
 import { cn } from "@/lib/utils";
+import { Spinner } from "./Spinner";
 
-interface ButtonProps {
-  children: ReactNode;
-  href?: string;
-  variant?: "primary" | "secondary" | "ghost";
-  className?: string;
-  onClick?: () => void;
+type Variant = "primary" | "secondary" | "ghost" | "danger";
+type Size = "sm" | "md";
+
+const base =
+  "inline-flex items-center justify-center gap-1.5 rounded-md font-medium " +
+  "whitespace-nowrap transition-colors duration-150 ease-out " +
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 " +
+  "disabled:pointer-events-none disabled:opacity-50";
+
+const variants: Record<Variant, string> = {
+  primary: "bg-accent text-white hover:bg-accent-hover",
+  secondary:
+    "border border-border-strong bg-bg text-text hover:bg-bg-subtle",
+  ghost: "text-text hover:bg-bg-subtle",
+  danger:
+    "bg-[var(--color-status-error)] text-white hover:brightness-95",
+};
+
+const sizes: Record<Size, string> = {
+  sm: "h-7 px-2.5 text-[13px]",
+  md: "h-8 px-3 text-sm",
+};
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: Variant;
+  size?: Size;
+  loading?: boolean;
 }
 
-export default function Button({
-  children,
-  href,
-  variant = "primary",
-  className,
-  onClick,
-}: ButtonProps) {
-  const baseStyles =
-    "group relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]";
-
-  const variants = {
-    primary:
-      "bg-foreground text-background hover:bg-foreground/90 shadow-[0_4px_20px_rgba(0,0,0,0.12)]",
-    secondary:
-      "bg-white text-foreground border border-border hover:border-foreground/30 hover:bg-accent",
-    ghost: "text-foreground hover:bg-accent",
-  };
-
-  const classes = cn(baseStyles, variants[variant], className);
-
-  if (href) {
-    return (
-      <Link href={href} className={classes} onClick={onClick}>
-        {children}
-      </Link>
-    );
-  }
-
-  return (
-    <button className={classes} onClick={onClick}>
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    { variant = "primary", size = "md", loading, className, children, disabled, ...props },
+    ref,
+  ) => (
+    <button
+      ref={ref}
+      className={cn(base, variants[variant], sizes[size], className)}
+      disabled={disabled || loading}
+      {...props}
+    >
+      {loading && <Spinner size="sm" className="text-current" />}
       {children}
     </button>
-  );
-}
+  ),
+);
+Button.displayName = "Button";

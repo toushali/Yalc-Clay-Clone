@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -10,8 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Clay Clone — Design V1",
-  description: "A Clay.com inspired landing page built with Next.js",
+  title: "Yalc",
+  description:
+    "A programmable, spreadsheet-style workspace for GTM data enrichment and workflows.",
 };
 
 export default function RootLayout({
@@ -20,10 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable}`}>
-      <body className="bg-background text-foreground antialiased font-sans">
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
-      </body>
+    <html lang="en" className={inter.variable}>
+      <body>{children}</body>
     </html>
   );
 }
