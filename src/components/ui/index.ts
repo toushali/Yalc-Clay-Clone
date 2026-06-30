@@ -18,5 +18,7 @@ export { Modal } from "./Modal";
 export type { ModalProps } from "./Modal";
 export { Menu, MenuItem, MenuSeparator } from "./Menu";
 export type { MenuProps, MenuItemProps } from "./Menu";
+export { ConfirmDialog } from "./ConfirmDialog";
+export type { ConfirmDialogProps } from "./ConfirmDialog";
 export { Portal } from "./Portal";
 export { ToastProvider, useToast } from "./Toast";
